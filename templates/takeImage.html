@@ -1,0 +1,88 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+
+{#<canvas id="c" width="640" height="480"></canvas>#}
+{#<canvas id="c" style="display:none" width="640" height="480"></canvas>#}
+<canvas id="c" style="display: none" width="640" height="480"></canvas>
+<body onload="turnOnCamera()"> </body>
+<video  autoplay="true" id="videoElement">
+</video>
+    <script>
+    var video = document.querySelector("#videoElement");
+    var canvas = document.getElementById("c");
+    //video.style.visibility = "hidden";
+
+
+
+{#if (navigator.mediaDevices.getUserMedia) {#}
+{#  navigator.mediaDevices.getUserMedia({ video: true })#}
+{#    .then(function (stream) {#}
+{#      video.srcObject = stream;#}
+{#    })#}
+{#    .catch(function (err0r) {#}
+{#      console.log("Something went wrong!");#}
+{#    });#}
+{#/}#}
+
+
+function turnOffCamera(){
+    video.srcObject = null;
+}
+function turnOnCamera(){
+    if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+    video.style.display = "block";
+    {#video.style.visibility = "hidden";#}
+    canvas.style.display = "none";
+}
+function captureImage(){
+    video.style.display = "none";
+    {#video.style.visibility = "hidden";#}
+    canvas.style.display = "block";
+    {#canvas.getContext("2d").drawImage(video, 0, 0, 300, 300, 0, 0, 300, 300);#}
+    canvas.getContext("2d").drawImage(video, 0, 0, 640, 480, 0, 0,640, 480);
+	var img = canvas.toDataURL("image/png");
+
+    var random = document.getElementById("random");
+
+  //  random.appendChild(image);
+    {#var imageID = document.getElementById("imageID");#}
+    {#imageID.value = img;#}
+    {#imageID.type ="text";#}
+
+    {#var image = document.getElementById("imageID");#}
+    {#image.value = img;#}
+
+    {#var image = Canvas2Image.convertToPNG(canvas, 640, 480, "png");#}
+    var image_id = document.getElementById("imageID");
+    image_id.value = img;
+
+
+
+
+}
+    </script>
+
+    <br> <br>
+{#    <button onclick="turnOffCamera()"> Turn off camera</button>#}
+    <button class="btn btn-secondary" onclick="turnOnCamera()"> Reset Camera</button>
+    <button class="btn btn-secondary" onclick="captureImage()"> Capture Image</button>
+
+
+
+<form action="{%  url 'takeImage' %}" method="post" enctype="multipart/form-data">
+    {%  csrf_token  %}
+    <input type="hidden" name="image" id="imageID" value="" style="display: none">
+    <button id="submit_image" class="btn btn-success" type="submit" value="Add">Add</button>
+
+</form>
+
+{% endblock %}

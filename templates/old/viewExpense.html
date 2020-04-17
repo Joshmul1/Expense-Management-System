@@ -1,0 +1,99 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+<body>
+<div class="createExpenseTable">
+    <table>
+    <th>
+            <table class="table table-striped">
+
+             <tr>
+                  <th>
+                      Name:
+                  </th>
+                  <td>
+                      {{ query_results.name}}
+                  </td>
+             </tr>
+             <tr class="border-top my-3">
+                  <th>
+                      Date:
+                  </th>
+                  <td>
+                      {{ query_results.date | date:"d-m-Y" }}
+                  </td>
+             </tr>
+             <tr class="border-top my-3">
+                 <th>
+                     Time:
+                 </th>
+                 <td>
+                     {{ query_results.time |  time:"H:i"  }}
+                 </td>
+             </tr>
+             <tr class="border-top my-3 border-bottom">
+                 <th>
+                     Price:
+                 </th>
+                 <td>
+                     £{{ query_results.price | floatformat:2}}
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Category:
+                 </th>
+                 <td>
+                    {{query_results.category_name.category_name  }}
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Paid:
+                 </th>
+                 <td>
+                    {% if query_results.has_been_paid == True %}
+                         <img src ='{% static 'Icons/tick_icon_16x16.png' %}'/>
+                    {% else %}
+                     <img src ='{% static 'Icons/cross_icon_16x16.png' %}'/>
+                {% endif %}
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+
+                 </th>
+                 <td>
+                    <a class="btn btn-primary" href="{% url 'create' object_id=query_results.id %}" role="button">Edit</a>
+
+                 </td>
+             </tr>
+            </table>
+
+    <th>
+    <div>
+    {% if query_results.image %}
+        <img style="box-shadow: 4px 4px 10px rgba(0,0,0,0.5)" class="rounded" src = "{{ query_results.image.url }}" width="480">
+    {% endif %}
+    </div>
+    </th>
+    </table>
+
+</div>
+
+
+
+
+{#<script src="{%  static "js/category_choice.js"  %}"></script>#}
+
+</body>
+
+
+    <style>
+
+    tr.table-line {
+  border-bottom:1pt solid black;
+}
+
+    </style>
+{% endblock %}

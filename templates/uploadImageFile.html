@@ -1,0 +1,14 @@
+{% extends 'baseTemplate.html' %}
+{% block content %}
+    {% if image_name %}
+        File: {{ image_name }}
+    {% endif %}
+    <form action="{%  url 'uploadImageFile' %}" method="post" enctype="multipart/form-data">
+    {%  csrf_token  %}
+    <input type="file" name="image" value="Choose image" accept="image/*,application/pdf" class="hidden" >
+    <input type="submit" value="Add">
+
+</form>
+
+
+{% endblock %}

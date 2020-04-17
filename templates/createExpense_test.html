@@ -1,0 +1,163 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+
+
+<div class="form_table_div">
+
+            <form action="{% url 'createSubmit' object_id=query_results.id %}" method="post">
+            <table id="form_table">
+            {%  csrf_token  %}
+             <tr style="width: 50%">
+                  <th>
+                      Name:
+
+                  </th>
+                  <td>
+                      <input class="form-control form-control-sm" type="text" name="name"  value="{{ query_results.name}}">
+                  </td>
+             </tr>
+             <tr>
+                  <th>
+                      Date:
+                  </th>
+                  <td>
+                      <input class="form-control form-control-sm" type="date" name="date"  value="{{ query_results.date.isoformat }}" required>
+                  </td>
+             </tr>
+             <tr>
+                 <th>
+                     Time:
+                 </th>
+                 <td>
+                     <input class="form-control form-control-sm" type="time" name="time" value="{{ query_results.time.isoformat }}" required>
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Price:
+                 </th>
+                 <td>
+                     <input class="form-control form-control-sm" type="number" name="price" step="any" value="{{ query_results.price | floatformat:2}}" required>
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     New or existing category?  :
+                 </th>
+                 <td>
+                     Existing:
+                    <input type='radio' name='category_choice' value='existing' checked>
+                     New:
+                    <input type='radio' name='category_choice' value='new'>
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Category:
+                 </th>
+                 <td>
+                 <div id = "category_id">
+                     <label>
+                         <select name="category_name">
+                             {% for item in all_categories  %}
+                                 <option value="{{item.category_name }}">{{item.category_name}}</option>
+
+                             {% endfor %}
+
+
+                         </select>
+                     </label>
+                 </div>
+
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                    Has it been Paid?
+                 </th>
+                 <td>
+                     <label>
+                         {% if query_results.has_been_paid == True %}
+                             <input type="checkbox" name="has_been_paid" value="true" checked>
+                         {% else %}
+                             <input type="checkbox" name="has_been_paid" value="true">
+                         {% endif %}
+                     </label>
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+
+                 </th>
+
+                 <td>
+                                    <input class="btn btn-primary" type="submit" name='submit' value="Save">
+                                    <input class="btn btn-primary" type="submit" name= 'submit' value="Delete">
+
+                 </td>
+             </tr>
+
+
+            </table>
+                                 </form>
+
+
+{#        </form>#}
+</div>
+
+<div id ="image" style="padding-right: 3%; padding-top: -100px">
+
+{% if query_results.image %}
+        <img style=" display: block; margin: 0 auto; max-width: 100%; max-height: 100%; box-shadow: 4px 4px 10px rgba(0,0,0,0.5)" class="rounded" src = "{{ query_results.image.url }}">
+    {% endif %}
+
+</div>
+
+
+
+
+{#<script src="{%  static "js/category_choice.js"  %}"></script>#}
+
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+    console.log("'{{ query_results.id }}'");
+    console.log("'{{ query_results.category_name.category_name }}'");
+   $('input[type=radio][name=category_choice]').change(function() {
+    if (this.value === 'existing') {
+        $('#category_id').html(
+            '<select name="category_name"> {% for item in all_categories  %}<option value="{{item.category_name}}">' +
+            '{{item.category_name}}</option>\n' +
+            '{% endfor %} </select>'
+        );
+    }
+    else if (this.value === 'new') {
+        $('#category_id').html('<input type="text" name="category_name" required>');
+    }
+});
+
+
+   function rotate(direction){
+
+
+       $.ajax({ type : "POST",
+        url: '{% url 'rotate_image' %}',
+           data : {
+             "csrfmiddlewaretoken": "{{ csrf_token }}",
+             'id' : {{ query_results.id }},
+             'direction': direction
+            },
+         success : function (data) {
+
+         }});
+
+
+   }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+
+<div class="" style="padding-top: 5%">
+
+            <table style="width: 50%;" class="table table-striped" id="form_table">
+             <tr style="width: 50%">
+                  <th>
+                      Name:
+
+                  </th>
+                  <td>
+                      {{ query_results.name}}
+                  </td>
+             </tr>
+             <tr>
+                  <th class="border-top my-3">
+                      Date:
+                  </th>
+                  <td  class="border-top">
+                     {{ query_results.date | date:"d-m-Y" }}
+                  </td>
+             </tr>
+             <tr>
+                 <th class="border-top my-3">
+                     Time:
+                 </th>
+                 <td class="border-top">
+                    {{ query_results.time |  time:"H:i"  }}
+                 </td>
+             </tr>
+             <tr>
+                 <th class="border-top my-3 ">
+                     Price:
+                 </th>
+                 <td class="border-top">
+                     £{{ query_results.price | floatformat:2}}
+                 </td>
+             </tr>
+             <tr  class="border-top">
+                 <th>
+                     Category:
+                 </th>
+                 <td  class="border-top">
+                     {{query_results.category_name.category_name}}
+                 </td>
+             </tr>
+             <tr>
+                 <th  class="border-top">
+                   Paid?
+                 </th>
+                 <td  class="border-top">
+                     <label>
+                        {% if query_results.has_been_paid == True %}
+                            <img src ='{% static 'Icons/tick_icon_16x16.png' %}'/>
+                        {% else %}
+                            <img src ='{% static 'Icons/cross_icon_16x16.png' %}'/>
+                        {% endif %}
+                     </label>
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+
+                 </th>
+
+                 <td>
+                    <a class="btn btn-primary" href="{% url 'create' object_id=query_results.id %}" role="button">Edit</a>
+
+
+                 </td>
+             </tr>
+
+            </table>
+
+
+{#        </form>#}
+</div>
+
+<div id ="image" style="padding-right: 3%;">
+
+{% if query_results.image %}
+        <img style=" display: block; margin: 0 auto; max-width: 100%; max-height: 100%; box-shadow: 4px 4px 10px rgba(0,0,0,0.5)" class="rounded" src = "{{ query_results.image.url }}">
+    {% endif %}
+
+</div>
+
+
+
+
+{#<script src="{%  static "js/category_choice.js"  %}"></script>#}
+
+
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+   function rotate(direction){
+
+
+       $.ajax({ type : "POST",
+        url: '{% url 'rotate_image' %}',
+           data : {
+             "csrfmiddlewaretoken": "{{ csrf_token }}",
+             'id' : {{ query_results.id }},
+             'direction': direction
+            },
+         success : function (data) {
+
+         }});
+
+
+   }
+
+</script>
+
+{% endblock %}

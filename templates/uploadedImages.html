@@ -1,0 +1,26 @@
+{% extends 'baseTemplate.html' %}
+
+{% block content %}
+    <h2> Unprocessed Expenses</h2>
+    <p>
+    This is a list of expenses that an image has been uploaded but not yet been fully processed
+    </p>
+  <table>
+    <tr>
+        <th>
+        Image id
+        </th>
+    </tr>
+
+    {% for item in query_results  %}
+
+    <tr>
+    <td> <a href="{% url 'create' object_id=item.id %}">ID : {{item.id }} </a> </td>
+
+    </tr>
+
+
+    {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+<div id="view" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Upload File</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+
+          <div class="createExpenseTable">
+    <table>
+    <th>
+            <table>
+
+             <tr>
+                  <th>
+                      Date:
+                  </th>
+                  <td>
+                      {{ query_results.date }}
+                  </td>
+             </tr>
+             <tr>
+                 <th>
+                     Time:
+                 </th>
+                 <td>
+                     {{ query_results.time }}
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Price:
+                 </th>
+                 <td>
+                     {{ query_results.price }}
+                 </td>
+             </tr>
+             <tr>
+                 <th>
+                     Category:
+                 </th>
+                 <td>
+                    {{query_results.category_name.category_name  }}
+                 </td>
+             </tr>
+            </table>
+
+    <th>
+    <div>
+    {% if query_results.image %}
+        <img style="box-shadow: 4px 4px 10px rgba(0,0,0,0.5)" class="rounded" src = "{{ query_results.image.url }}" width="480">
+    {% endif %}
+    </div>
+    </th>
+    </table>
+
+</div>
+
+
+{#<script src="{%  static "js/category_choice.js"  %}"></script>#}
+
+</body>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

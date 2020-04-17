@@ -1,0 +1,17 @@
+{% extends 'baseTemplate.html' %}
+{% block content %}
+<br>
+    <br>
+
+    <p> The excel file has been prepared. Please click download below to download: </p>
+    <br>
+<form action="{%  url 'excelExport' %}" method="post">
+    {%  csrf_token  %}
+    <input type="hidden" name="data_name" value="test_value">
+    <input class="btn btn-success" type="submit" value="Download File">
+
+</form>
+
+
+
+{% endblock %}

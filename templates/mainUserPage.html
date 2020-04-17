@@ -1,0 +1,113 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+{#<link rel="stylesheet" type="text/css" href="DataTables/datatables.css"/>#}
+{##}
+    <script type="text/javascript" src="{% static 'DataTables/jQuery-3.3.1/jquery-3.3.1.js' %}"></script>
+
+{##}
+{#<script type="text/javascript" src="/static/DataTables/datatables.js"></script>#}
+
+
+<h1> Expenses</h1>
+
+
+
+
+    <table id="table_id" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Time
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Paid
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in query_results  %}
+
+            <tr>
+            <td> {{ item.id }}</td>
+
+            <td> {{ item.name }}</td>
+
+            <td data-order="{{  item.date | date:"Y-m-d" }}"> {{  item.date |date:"d-m-Y"}}</td>
+
+            <td> {{ item.time | time:"H:i" }} </td>
+
+            <td> £{{ item.price | floatformat:2 }} </td>
+
+            <td> {{ item.category_name.category_name }} </td>
+                {% if item.has_been_paid == True %}
+                    <td class="center" data-id="0"> <img alt="Paid" src ='{% static 'Icons/tick_icon_16x16.png' %}'/><label style="display: none"> 0</label> </td>
+                    {% else %}
+                    <td class="center" data-id="1"> <img alt="Not Paid" src ='{% static 'Icons/cross_icon_16x16.png' %}'/><label style="display: none"> 1</label>  </td>
+                {% endif %}
+                    <td> <img src = "{{ item.image.url }}"> </td>
+            </tr>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+<script>
+
+    function download_pdf(){
+        var table = $('#table_id');
+        var cells = table.DataTable().rows({search : 'applied' }).data();
+        console.log(cells);
+        console.log(cells['length']);
+
+        var object_ids = [];
+        for(var i = 0 ; i < cells['length'] ; i ++){
+            object_ids.push(cells[i][0])
+        }
+        {#window.open({% url 'excelExport' %});#}
+
+        console.log(object_ids);
+        $.ajax({ type : "POST",
+        url: '{% url 'store_values' %}',
+        dataType : 'json',
+        data : {
+             "csrfmiddlewaretoken": "{{ csrf_token }}",
+             'object_ids' : JSON.stringify(object_ids)
+         },
+         success : function (data) {
+            console.log("SUCCESS");
+            window.open("/excelTest");
+
+         }});
+
+
+    }
+
+</script>
+
+{#    <a href="#" class="ui-icon ui-icon-plusthick"></a>#}
+<style>
+.center{
+    text-align: center  ;
+}
+</style>
+{% endblock %}
+
+

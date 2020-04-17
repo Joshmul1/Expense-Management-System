@@ -1,0 +1,14 @@
+{% extends 'baseTemplate.html' %}
+{% block content %}
+<div class="row">
+    <a class="btn btn-primary" href="{% url 'uploadImageFile' %}">
+           Upload Image
+        </a>
+    <br> <br>
+    <a class="btn btn-primary" href="{% url 'takeImage' %}">
+           Take Image
+        </a>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+<h1> MAIN PAGE. Probably add authentication at some point </h1>
+
+
+<h2> <a href='main'>Click here to go to expense page</a> </h2>
+
+
+{% if user.is_authenticated %}
+  <div style="text-align:center">Hi {{ user.username }}! You are logged in</div>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}

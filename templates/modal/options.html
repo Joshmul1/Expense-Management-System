@@ -1,0 +1,27 @@
+<div id="options" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Image Options</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+    <a data-toggle="modal" data-target="#uploadImage" data-dismiss="modal" class="btn btn-block btn-secondary" href="/">
+           Upload Image
+        </a>
+{#    <a data-toggle="modal" data-target="#camera" data-dismiss="modal" class="btn btn-block btn-secondary" onclick="turnOnCamera()" href="/">#}
+{#           Take Image#}
+{#        </a>#}
+      <a class = "btn btn-block btn-secondary" href="{% url 'takeImage' %}">
+          Take Image
+      </a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

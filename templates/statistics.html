@@ -1,0 +1,154 @@
+{% extends 'baseTemplate.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript" src="{% static 'js/jquery.js'%}"></script>
+
+<h1> Statistics</h1>
+
+<body>
+Choose a time-frame from the box below to get some statistics on spending.
+<br>
+
+
+<label for="time">Choose a time-frame:</label>
+
+<select id="time" class="form-control form-control-sm col-2">
+  <option value="week" selected>1 Week</option>
+  <option value="month">1 Month</option>
+  <option value="year">1 Year</option>
+  <option value="all">All time</option>
+</select>
+
+
+<label for="category">Choose a category:</label>
+
+<select id="category" class="form-control form-control-sm col-2">
+                {% for item in all_categories  %}
+                                 {% ifequal item.category_name 'None' %}
+                                    <option value="{{item.category_name }}" selected>All</option>
+                                 {% else %}
+                                    <option value="{{item.category_name }}">{{item.category_name}}</option>
+                                 {% endifequal %}
+
+                             {% endfor %}
+</select>
+
+
+<br>
+<div id="total_stat">
+
+</div>
+
+  <div id="chart-container" style="width: 75%;">
+    <canvas id="pie-chart"></canvas>
+  </div>
+
+
+</body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<script>
+function updatePieChart(labels, data) {
+    var colours = getRandomColor(labels.length);
+    console.log(colours);
+    var config = {
+
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: data,
+                backgroundColor: colours,
+                label: 'Population'
+            }],
+            labels: labels
+        },
+        options: {
+            responsive: true
+
+        }
+    };
+
+    var ctx = document.getElementById('pie-chart').getContext("2d");
+    if (window.myPie !== undefined) {
+
+        window.myPie.destroy();
+    }
+    newChart = new Chart(ctx, config);
+    {#window.myPie = new Chart(ctx, config);#}
+    window.myPie = newChart;
+
+    {#$("#pie-chart").click(#}
+    {#    function (evt) {#}
+    {#        var activePoints = newChart.getElementAtEvent(evt);#}
+    {#        var label = newChart.data.labels[activePoints[0]._index];#}
+    {#        window.open("/view/" + label);#}
+    {#        console.log("ACTIVE POINTS: " + label);#}
+    {##}
+    {##}
+    {#    }#}
+    {#);#}
+
+
+    function getRandomColor(amount) {
+        var letters = '0123456789ABCDEF'.split('');
+        var colours = [];
+        for (var i = 0; i < amount; i++) {
+        var colour = '#';
+
+        for (var j = 0; j < 6; j++) {
+            colour += letters[Math.floor(Math.random() * 16)];
+        }
+        colours.push(colour);
+         }
+        return colours
+    }
+
+
+
+
+
+
+}
+
+
+$('select').on('change', function () {
+    updateText();
+});
+
+
+function updateText(){
+    var selected_value_time = $('#time').val();
+    var selected_value_category = $('#category').val();
+console.log(selected_value_category);
+$.ajax({ type : "POST",
+        url: '{% url 'ajaxStats' %}',
+        dataType : 'json',
+        data : {
+             "csrfmiddlewaretoken": "{{ csrf_token }}",
+             'time_choice': selected_value_time,
+             'category_choice' : selected_value_category
+         },
+         success : function (data) {
+             console.log(data);
+             total = data.total_spend;
+             total = parseFloat(total).toFixed(2);
+             console.log("TOTAL = " + total);
+             {#$('#total_stat').replaceWith("Total spending in the past " + selected_value + " is: £" + total )#}
+             if (selected_value_time ==='all'){
+                 $('#total_stat').text("Total spending for these expenses are: £" + total );
+
+             }
+             else{
+                 $('#total_stat').text("Total spending in the past " + selected_value_time + " is: £" + total );
+             }
+             updatePieChart(data.labels, data.data)
+         }});
+}
+
+$( document ).ready(function() {
+    updateText();
+});
+</script>
+
+{% endblock %}

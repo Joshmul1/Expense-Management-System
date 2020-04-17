@@ -1,0 +1,31 @@
+<html lang="en">
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{%  static "css/bootstrap.css"  %}">
+<link rel="stylesheet" href="{%  static "css/dataTables.bootstrap4.css"  %}">
+
+    {% if image_name %}
+        File: {{ image_name }}
+    {% endif %}
+    <form id="upload_auto" action="{%  url 'uploadImageFile' %}" method="post" enctype="multipart/form-data">
+    {%  csrf_token  %}
+        <label class="btn btn-primary"> Take image
+            <input id="file" type="file" name="image" value="Choose image" accept="image/*,application/pdf" hidden>
+        </label>
+
+        <label class="btn btn-primary"> Submit
+             <input type="submit" hidden>
+        </label>
+{#    <input type="submit" value="Add">#}
+
+    </form>
+
+
+<script>
+    document.getElementById("file").onchange = function() {
+    document.getElementById("upload_auto").submit();
+};
+
+</script>
+
+</html>

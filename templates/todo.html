@@ -1,0 +1,24 @@
+{% extends 'baseTemplate.html' %}
+{% block content %}
+
+<h1> This is the todo page</h1>
+
+    <h2> This is all submitted TODO's</h2>
+
+    {% for item in query_results  %}
+        <li> {{ item.text }}</li>
+    {% endfor %}
+
+    <br>
+
+<form action="{%  url 'todo' %}" method="post">
+    {%  csrf_token  %}
+    {{ form }}
+    <input type="submit" value="Add">
+
+</form>
+
+
+{% endblock%}
+
+

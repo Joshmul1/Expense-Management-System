@@ -1,0 +1,68 @@
+<div id="camera" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-xl">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Take Image</h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="turnOffCamera()">&times;</button>
+      </div>
+      <div class="modal-body">
+              <button onclick="turnOffCamera()"> Turn off camera</button>
+              <button onclick="turnOnCamera()"> Turn on camera</button>
+              <button onclick="captureImage()"> Capture Image</button>
+
+
+<form action="{%  url 'takeImage' %}" method="post" enctype="multipart/form-data">
+    {%  csrf_token  %}
+    <input type="hidden" name="image" id="imageID" value="" style="display: none">
+    <input type="submit" value="Submit">
+
+</form>
+        <canvas id="c" style="display: none" width="640" height="480"></canvas>
+<video autoplay="true" id="videoElement">
+</video>
+    <script>
+    var video = document.querySelector("#videoElement");
+    var canvas = document.getElementById("c");
+function turnOffCamera(){
+    video.srcObject = null;
+}
+
+function turnOnCamera(){
+    if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+    video.style.display = "block";
+    {#video.style.visibility = "hidden";#}
+    canvas.style.display = "none";
+}
+function captureImage(){
+    video.style.display = "none";
+    {#video.style.visibility = "hidden";#}
+    canvas.style.display = "block";
+    {#canvas.getContext("2d").drawImage(video, 0, 0, 300, 300, 0, 0, 300, 300);#}
+    canvas.getContext("2d").drawImage(video, 0, 0, 640, 480, 0, 0,640, 480);
+	var img = canvas.toDataURL("image/png");
+
+    var random = document.getElementById("random");
+
+    var image_id = document.getElementById("imageID");
+    image_id.value = img;
+}
+    </script>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="turnOffCamera()">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+

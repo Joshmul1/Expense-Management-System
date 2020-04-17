@@ -1,0 +1,116 @@
+{% load static %}
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}"/>
+<link rel="stylesheet" href="{%  static "css/test.css"  %}">
+<link rel="stylesheet" href="{%  static "css/bootstrap.css"  %}">
+<link rel="stylesheet" href="{%  static "css/dataTables.bootstrap4.css"  %}">
+<script type="text/javascript" src="{% static 'js/jquery.js'%}"></script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div id="sidebar">
+    <img alt="Paid" src ='{% static 'Icons/logo_1_grey_small.png' %}'/>
+    <u1>
+
+        <br>
+    <li>
+        <a class="sideitem" href="{% url 'main' %}">
+            Home
+        </a>
+    </li>
+
+    <li>
+        <a class="sideitem" data-toggle="modal" data-target="#options" href="">
+           Create Expense
+        </a>
+    </li>
+       <li>
+        <a class="sideitem" href="{% url 'statistics' %}">
+           Statistics
+        </a>
+    </li>
+       <li>
+        <a class="sideitem " href="{% url 'images' %}">
+           Unprocessed Expenses
+        </a>
+    </li>
+    <li class="bottom_button" style="text-align: center;">
+{#        <a class="sideitem" id="bottom_button" href="{% url 'logout' %}">#}
+{#            Log out#}
+{#        </a>#}
+        <a href="{% url 'logout' %}" class="btn-block text-danger">
+            Log out
+        </a>
+    </li>
+
+
+    </u1>
+</div>
+<body>
+<div id = content-main>
+{% block content %}
+
+
+{% endblock %}
+
+
+
+</div>
+
+{# Upload Choice Modal Code #}
+{% include "modal/options.html" %}
+{% include "modal/camera.html" %}
+{% include "modal/uploadImage.html" %}
+{% include "modal/use_search.html" %}
+</body>
+<script type="text/javascript" src="{% static 'DataTables/jQuery-3.3.1/jquery-3.3.1.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'DataTables/datatables.js' %}"></script>
+
+
+
+
+{#<script type="text/javascript" src="{% static 'js/table_edit.js' %}"></script>#}
+<script>
+
+    $(document).ready( function () {
+        var table = $('#table_id').DataTable(
+            {
+       buttons: [
+        'pdfHtml5'
+    ],
+  "columns": [
+    { "visible": false },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+      {"visible" : false}
+  ],
+
+               "dom" : '<"toolbar">frtip'});
+
+
+            $('#table_id tbody').on('click', 'tr', function () {
+        var data = table.row( this ).data();
+        {#alert( 'You clicked on '+data[0]+'\'s row' );#}
+                var id = data[0];
+                window.open("/view/"+id);
+    } );
+
+        $('input[type = search]').addClass('form-control form-control-sm');
+        $('[name= "table_id_length').addClass('form-control form-control-sm');
+
+
+        $("div.toolbar").html('<button class="btn btn-secondary" type="button" onclick="download_pdf()"> Download Current Table as excel</button>\n' + '        <a data-toggle="modal" data-target="#use_search" href="">\n' +
+            '           Help?\n' +
+            '        </a>' + '');
+} );
+</script>
+
+</html>

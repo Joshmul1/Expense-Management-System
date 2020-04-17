@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+#sidebar{
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    /*background-color: #007bff;;*/
+    background-color: #f0f4f7;;
+    padding-top: 5%;
+    overflow: auto;
+}
+.bottom_button{
+    bottom:0;
+    position: absolute;
+    width: 50%;
+    border-radius:  0 !important;
+}
+#sidebar li{
+    width: 98%;
+}
+#sidebar img{
+    top: 0;
+    position: absolute;
+    width: 100%;
+}
+#sidebar a{
+    padding-top: 12%;
+    color: #3c4b64;
+    font-family: barlow,sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+
+}
+#sidebar a:hover{
+    color: #777777;
+}
+
+#content-main{
+    height: 100%;
+    width: 80%;
+    position: absolute;
+    margin-left: 20%;
+    top: 0;
+    left: 0;
+    background-color: #fbfbfb;
+    padding: 0px;
+}
+
+u1 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 50%;
+}
+
+li a{
+    display: block;
+    color: #fbfbfb;
+    text-decoration: none;
+    font-size: large;
+    padding: 8px 16px;
+    font-family: 'Roboto', sans-serif;
+    border-bottom: white;
+}
+
+li a:hover{
+    text-decoration: none;
+    color: lightgray;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    background : none;
+}
+
+ .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+     background: none;
+     border: none;
+     background-color: lightgray;
+ }
+
+ .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+     background: none;
+     background-color: white;
+ }
+
+ .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+     background: none;
+     background-color: white;
+ }
+
+table{
+    table-layout: auto;
+    width: 45%;
+}
+th{
+    text-align: left;
+    padding-bottom: 10px;
+    padding-left: 3%;
+}
+
+
+
+.createExpenseTable th{
+    width: 50%;
+    vertical-align: top;
+
+
+}
+
+.modal-body {
+    overflow-y: auto;
+}
+
+#image{
+    width: 50%;
+    height: 90%;
+    right: 0;
+    position: absolute;
+
+}
+
+
+#form_table{
+    left: 0;
+    position: absolute;
+
+}
+
+
+/*#form_table td,th{*/
+/*    width: 50%;*/
+/*}*/
+
+
+
+

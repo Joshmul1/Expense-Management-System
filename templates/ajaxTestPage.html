@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+     $.ajax({ type : "POST",
+        url: '{% url 'ajaxSearch' %}',
+         data :{
+            "csrfmiddlewaretoken": "{{ csrf_token }}",
+             "category_name" :"USA"},
+         success : function (data) {
+             console.log(data);
+         }});
+
+
+
+</script>
+
+</html>
