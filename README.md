@@ -2,12 +2,7 @@
 
 An web-based expense management system, using Django, that allows automation in the documentation by using Computer Vision and Opticial Character Recognition.
 
-How to setup
-
-* Open the 'Instructions' folder and open any 'install_instructions' file either .md .txt or .pdf and follow the instructions
-
-When the server is running the application can be accessed from
-[localhost:8000](localhost:8000)
+Different formats of installation and setup instructions can be found in the 'Instructions' folder.
 
 The default user for testing is:
 
