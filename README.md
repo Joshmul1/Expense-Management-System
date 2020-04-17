@@ -81,7 +81,7 @@ install dependencies.
 Open command prompt or terminal and set the directory to the root of the project
 files. If the project files are on your desktop it would look like this:
 ```
-cd Desktop/ems-python
+cd Desktop/Expense-Management-System
 ```
 
 Once in this location, by using the command that worked for python version 
@@ -140,7 +140,7 @@ Navigate to the root directory of the project following the same command as
 earlier. If this is in desktop then it would look like:
 
 ```
-cd Desktop/ems-python
+cd Desktop/Expense-Management-System
 ```
 
 Finally type the following command to run the server using the python command
